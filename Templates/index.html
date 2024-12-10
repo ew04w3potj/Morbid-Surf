@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MorbidSurf in collaboration with ZeroTier Networks</title>
+
+    <!-- Import particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+    <!-- Custom Styles -->
+    <style>
+        /* Particles.js container */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background-color: #000;
+        }
+
+        /* General Page Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+
+        h1, h2, h3 {
+            color: #a78cf2;
+        }
+
+        p, td {
+            color: #fff;
+        }
+
+        /* Box Styling */
+        .transparent-box {
+            background-color: rgba(0, 0, 0, 0.5); /* Transparent background */
+            border: 2px solid #a78cf2; /* Light purple outline */
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        /* Hover Effects */
+        button:hover, h3:hover, a:hover, .help-container:hover {
+            color: #a78cf2;
+            transform: scale(1.05);
+            transition: all 0.3s ease;
+        }
+
+        /* Top Left Section Styling */
+        .top-left-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            max-width: 300px;
+        }
+
+        .about-me-btn {
+            background: rgba(0, 0, 0, 0.5); /* Transparent gray */
+            padding: 10px 20px;
+            color: #fff;
+            border: 2px solid #a78cf2; /* Light purple border */
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .about-me-section {
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Help/Questions Section */
+        .help-container {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #a78cf2;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            width: 200px;
+            text-align: center;
+        }
+
+            .help-container:hover {
+                background-color: rgba(167, 140, 242, 0.1);
+            }
+
+        .help-header {
+            color: #a78cf2;
+            margin: 0 0 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .help-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+        }
+
+        .discord-logo {
+            width: 24px;
+            height: 24px;
+        }
+
+        .help-content span {
+            font-size: 16px;
+        }
+
+        /* Network Table Styling */
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 90%;
+            transition: margin-left 0.3s ease; /* Smooth transition for moving the table */
+            z-index: 1;
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #a78cf2;
+            border: 1px solid #a78cf2;
+            padding: 10px;
+            text-align: center;
+        }
+
+        td {
+            background-color: transparent;
+            border: 1px solid #a78cf2;
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+        }
+
+        /* When About Me Section is Opened, Add Space to the Whole Network Table */
+        .about-me-open {
+            margin-left: 357px; /* Push the entire network table over */
+        }
+
+        /* Position About Me Section to Avoid Overlap */
+        .about-me-section.open {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            width: 300px;
+            display: block;
+        }
+        /* Prevent body overflow and remove scroll bar */
+        body {
+            overflow: hidden; /* This hides the scrollbar */
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- Top Left Section -->
+    <div class="top-left-container">
+        <button class="about-me-btn" onclick="toggleAboutMe()">Learn More About Me</button>
+
+        <div class="about-me-section transparent-box" id="about-me-section">
+            <h2>Goals</h2>
+            <p>My aim is to grow as a programmer, tackle challenging problems, and explore technologies that contribute to real-world solutions. I strive to create tools that are both efficient and user-friendly, pushing my limits every step of the way!</p>
+
+            <div class="projects">
+                <div class="project">
+                    <h3 onclick="toggleProjectDetails(this)">Discord Bot Integration</h3>
+                    <p class="project-detail">Developed a custom Discord bot that interacts with OpenAI APIs and provides automated responses.</p>
+                </div>
+                <div class="project">
+                    <h3 onclick="toggleProjectDetails(this)">ZeroTier Network Management</h3>
+                    <p class="project-detail">Integrated ZeroTier with this very website to display and manage virtual network details, such as network ID and status tracking.</p>
+                </div>
+                <div class="project">
+                    <h3 onclick="toggleProjectDetails(this)">Server Security Projects</h3>
+                    <p class="project-detail">Worked on securing home servers with custom scripts for monitoring and controlling access, ensuring a safe environment for remote work.</p>
+                </div>
+                <div class="project">
+                    <h3 onclick="toggleProjectDetails(this)">Real-Time Network Monitoring</h3>
+                    <p class="project-detail">Developed scripts to monitor network activity and provide real-time alerts based on specific thresholds.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Network Table -->
+    <h1 style="text-align: center;">MorbidSurf in collaboration with ZeroTier Networks</h1>
+    <table id="network-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Network ID</th>
+                <th>Status</th>
+                <th>ZeroTier Virtual IP</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for network in networks %}
+            <tr>
+                <td>{{ network.name }}</td>
+                <td>{{ network.id }}</td>
+                <td>{{ network.status }}</td>
+                {% if loop.first %}
+                <td rowspan="{{ networks|length }}">{{ zerotier_ip }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Help/Questions Section -->
+    <div class="help-container" onclick="window.open('https://discord.gg/PRqNwhCMYp', '_blank')">
+        <h3 class="help-header">Help & Questions</h3>
+        <div class="help-content">
+            <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/3.13.0/discord.svg" alt="Discord Logo" class="discord-logo">
+            <span>Join our Discord</span>
+        </div>
+    </div>
+
+    <!-- Particles.js Initialization -->
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 100 },
+                color: { value: "#8572bd" },
+                shape: { type: "circle" },
+                opacity: { value: 0.3 },
+                size: { value: 3 },
+                move: { speed: 2 }
+            },
+            interactivity: {
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "repulse" }
+                }
+            },
+            retina_detect: true
+        });
+
+        // Toggle About Me Section
+        function toggleAboutMe() {
+            const aboutMeSection = document.getElementById('about-me-section');
+            const table = document.getElementById('network-table');
+            aboutMeSection.classList.toggle('open');
+            table.classList.toggle('about-me-open');
+        }
+
+        // Toggle Dropdown Sections
+        function toggleDropdown(sectionId) {
+            const dropdownContent = document.getElementById(sectionId);
+            dropdownContent.style.display =
+                dropdownContent.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Toggle Individual Project Details
+        function toggleProjectDetails(header) {
+            const detail = header.nextElementSibling;
+            const isActive = detail.style.display === 'block';
+
+            document.querySelectorAll('.project-detail').forEach(d => (d.style.display = 'none'));
+            document.querySelectorAll('.projects .project h3').forEach(h => h.classList.remove('active'));
+
+            if (!isActive) {
+                detail.style.display = 'block';
+                header.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
